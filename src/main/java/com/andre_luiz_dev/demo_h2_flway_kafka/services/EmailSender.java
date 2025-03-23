@@ -16,7 +16,6 @@ public class EmailSender {
 
     public String sendEmail(String email, String message, String subject) {
         Resend instance = new Resend(apiKey);
-        System.out.println(apiKey);
 
         CreateEmailOptions params = CreateEmailOptions.builder()
             .from("Andre Luiz - Dev <ceo@andre-luiz-dev.com>")
