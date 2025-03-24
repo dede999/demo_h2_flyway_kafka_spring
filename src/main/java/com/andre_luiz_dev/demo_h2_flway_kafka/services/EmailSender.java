@@ -5,6 +5,8 @@ import com.resend.core.exception.ResendException;
 import com.resend.services.emails.model.CreateEmailOptions;
 import com.resend.services.emails.model.CreateEmailResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ public class EmailSender {
 
     @Value("${api.secret.resend_key}")
     private String apiKey;
+
+    private static final Logger logger = LoggerFactory.getLogger(EmailSender.class);
 
     public String sendEmail(String email, String message, String subject) {
         Resend instance = new Resend(apiKey);
@@ -28,7 +32,7 @@ public class EmailSender {
             CreateEmailResponse data = instance.emails().send(params);
             return data.getId();
         } catch (ResendException e) {
-            e.printStackTrace();
+            logger.error(e.getLocalizedMessage());
             return null;
         }
     }
