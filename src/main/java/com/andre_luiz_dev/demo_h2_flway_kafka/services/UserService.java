@@ -15,4 +15,8 @@ public class UserService {
         return userService.findByEmail(email)
             .orElseThrow(() -> new UserNotFoundException(email));
     }
+
+    public boolean existsByEmail(String email) {
+        return userService.existsByEmail(email);
+    }
 }
