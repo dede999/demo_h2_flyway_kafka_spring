@@ -1,6 +1,7 @@
 package com.andre_luiz_dev.demo_h2_flway_kafka.controllers;
 
 import com.andre_luiz_dev.demo_h2_flway_kafka.configuration.dtos.ExceptionResponseDto;
+import com.andre_luiz_dev.demo_h2_flway_kafka.exceptions.RegisteredUserMailException;
 import com.andre_luiz_dev.demo_h2_flway_kafka.exceptions.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,5 +23,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.UNPROCESSABLE_ENTITY)
                 .body(new ExceptionResponseDto("User not found", ex.getMessage()));
+    }
+
+    @ExceptionHandler(RegisteredUserMailException.class)
+    public ResponseEntity<ExceptionResponseDto> handleRegisteredUserMailException(RegisteredUserMailException ex) {
+        return ResponseEntity
+                .status(HttpStatus.UNPROCESSABLE_ENTITY)
+                .body(new ExceptionResponseDto("User email was already registered", ex.getMessage()));
     }
 }
