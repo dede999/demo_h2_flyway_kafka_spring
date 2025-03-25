@@ -1,6 +1,6 @@
 package com.andre_luiz_dev.demo_h2_flway_kafka.configuration;
 
-import com.andre_luiz_dev.demo_h2_flway_kafka.services.SecurityFilterService;
+import com.andre_luiz_dev.demo_h2_flway_kafka.services.auth.SecurityFilterService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

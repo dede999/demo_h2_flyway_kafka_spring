@@ -1,4 +1,4 @@
-package com.andre_luiz_dev.demo_h2_flway_kafka.services;
+package com.andre_luiz_dev.demo_h2_flway_kafka.services.auth;
 
 import com.andre_luiz_dev.demo_h2_flway_kafka.domain.auth.models.UserModel;
 import com.andre_luiz_dev.demo_h2_flway_kafka.exceptions.TokenServiceException;
