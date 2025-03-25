@@ -5,6 +5,7 @@ import com.andre_luiz_dev.demo_h2_flway_kafka.exceptions.TokenServiceException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -31,11 +32,15 @@ public class TokenService {
     }
 
     public String verifyToken(String token) {
-        return JWT.require(Algorithm.HMAC256(jwtKey))
-            .build()
-            .verify(token)
-            .getClaim("userID")
-            .asString();
+        try {
+            return JWT.require(Algorithm.HMAC256(jwtKey))
+                .build()
+                .verify(token)
+                .getClaim("userID")
+                .asString();
+        } catch (JWTVerificationException e) {
+            throw new TokenServiceException(e.getMessage());
+        }
     }
 
     public Instant getExpirationDate() {
