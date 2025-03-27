@@ -38,7 +38,7 @@ public class UserModel implements UserDetails {
 
         for (UserRole u_role : UserRole.values()) {
             if (role.ordinal() >= u_role.ordinal()) {
-                authorities.add(new SimpleGrantedAuthority(u_role.getRole()));
+                authorities.add(new SimpleGrantedAuthority("ROLE_" + u_role.getRole()));
             }
         }
 

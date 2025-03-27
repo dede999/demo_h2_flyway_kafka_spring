@@ -6,10 +6,10 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum UserRole {
-    BASE_USER("ROLE_USER"),
-    TIER_ONE("ROLE_TIER_ONE"),
-    TIER_TWO("ROLE_TIER_TWO"),
-    ADMIN("ROLE_ADMIN");
+    BASE_USER("USER"),
+    TIER_ONE("TIER_ONE"),
+    TIER_TWO("TIER_TWO"),
+    ADMIN("ADMIN");
 
     private final String role;
 }
