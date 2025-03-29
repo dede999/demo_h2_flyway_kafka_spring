@@ -2,8 +2,10 @@ package com.andre_luiz_dev.demo_h2_flway_kafka.controllers;
 
 import com.andre_luiz_dev.demo_h2_flway_kafka.domain.auth.records.EmailSendingDto;
 import com.andre_luiz_dev.demo_h2_flway_kafka.domain.auth.records.SentEmailDto;
+import com.andre_luiz_dev.demo_h2_flway_kafka.services.kafka.KafkaProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,8 +17,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RequestMapping("/api/first")
 public class FirstController {
-    @Autowired
     private EmailSender emailSender;
+    private KafkaProducerService kafkaProducerService;
 
     @RequestMapping("/send")
     public ResponseEntity<SentEmailDto> emailSender(@RequestBody EmailSendingDto emailSendingDto) {
@@ -29,5 +31,11 @@ public class FirstController {
         return ResponseEntity.ok(new SentEmailDto(
                 emailSendingDto.email(), "The email has been successfully sent", emailID
         ));
+    }
+
+    @PostMapping("/apache-msg")
+    public ResponseEntity<ResponseEntity<String>> emailSenderApache(@RequestBody EmailSendingDto emailSendingDto) {
+        kafkaProducerService.sendMessage(emailSendingDto.compressedToString());
+        return ResponseEntity.ok(ResponseEntity.ok("The message has been successfully sent to Kafka"));
     }
 }

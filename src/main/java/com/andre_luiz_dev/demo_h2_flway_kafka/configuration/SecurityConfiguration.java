@@ -31,6 +31,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/*").permitAll()
                         .requestMatchers("/api/first/send").permitAll()
+                        .requestMatchers("/api/first/apache-msg").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
