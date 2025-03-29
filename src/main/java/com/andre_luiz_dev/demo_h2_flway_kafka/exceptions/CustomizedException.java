@@ -7,15 +7,15 @@ public class CustomizedException extends RuntimeException {
     super(message);
   }
 
-  public static List<String> getErrorContext() {
-    String className = CustomizedException.class.getSimpleName(); // Get simple class name (e.g., "ServiceNameException")
-      className = className.substring(0, className.length() - "Exception".length()); // Remove "Exception"
-      return List.of(className.split("(?=[A-Z])"));
-
+  public static List<String> getErrorContext(String exceptionClassName) {
+    String className = exceptionClassName.substring(
+      0, exceptionClassName.length() - "Exception".length()
+    ); // Remove "Exception"
+    return List.of(className.split("(?=[A-Z])"));
   }
 
-  public  static String getFormattedMessage(String message) {
+  public  static String getFormattedMessage(String message, String exceptionClassName) {
     final String ERROR_MESSAGE_TEMPLATE = "Message > %s\n Error Context > %s\n";
-    return String.format(ERROR_MESSAGE_TEMPLATE, message, getErrorContext());
+    return String.format(ERROR_MESSAGE_TEMPLATE, message, getErrorContext(exceptionClassName));
   }
 }
