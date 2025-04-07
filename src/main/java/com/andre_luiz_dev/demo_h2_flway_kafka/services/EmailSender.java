@@ -1,5 +1,6 @@
 package com.andre_luiz_dev.demo_h2_flway_kafka.services;
 
+import com.andre_luiz_dev.demo_h2_flway_kafka.domain.auth.records.EmailSendingDto;
 import com.resend.Resend;
 import com.resend.core.exception.ResendException;
 import com.resend.services.emails.model.CreateEmailOptions;
@@ -8,6 +9,7 @@ import com.resend.services.emails.model.CreateEmailResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,5 +37,10 @@ public class EmailSender {
             logger.error(e.getLocalizedMessage());
             return null;
         }
+    }
+
+    @KafkaListener(topics = "email-order-topic", containerFactory = "kafkaListenerContainerFactory")
+    public void listen(EmailSendingDto emailSendingDto) {
+        logger.info("Email sent to {}", emailSendingDto.email());
     }
 }

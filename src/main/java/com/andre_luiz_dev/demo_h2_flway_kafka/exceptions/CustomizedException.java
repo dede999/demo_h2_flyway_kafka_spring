@@ -3,6 +3,10 @@ package com.andre_luiz_dev.demo_h2_flway_kafka.exceptions;
 import java.util.List;
 
 public class CustomizedException extends RuntimeException {
+  public CustomizedException(String message, Throwable cause) {
+    super(message);
+  }
+
   public CustomizedException(String message) {
     super(message);
   }

@@ -48,7 +48,10 @@ public class AuthController {
         );
 
         if (!passwordEncoder.matches(userData.password(), user.getPassword())) {
-            throw new WrongPasswordException("The password is incorrect for this user. Please try again with a correct password.");
+            throw new WrongPasswordException(
+                    "The password is incorrect for this user. Please try again with a correct password.",
+                    null
+            );
         }
 
         return ResponseEntity.ok()
