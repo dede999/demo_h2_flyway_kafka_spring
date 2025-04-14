@@ -6,7 +6,6 @@ import com.andre_luiz_dev.demo_h2_flway_kafka.domain.auth.models.UserModel;
 import com.andre_luiz_dev.demo_h2_flway_kafka.services.UserService;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -15,7 +14,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import java.io.IOException;
 
 @Service
@@ -28,9 +26,16 @@ public class SecurityFilterService extends OncePerRequestFilter {
     protected void doFilterInternal(
             HttpServletRequest request,
             HttpServletResponse response,
-            FilterChain filterChain) throws ServletException, IOException {
+            FilterChain filterChain) throws IOException {
         try {
             String header = request.getHeader("Authorization");
+
+            // Skip authentication if Authorization header is missing or empty
+            if (header == null || header.isEmpty()) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+
             String token = header.replace("Bearer ", "");
             String email = tokenService.verifyToken(token);
             UserModel user = userService.getUserByEmail(email);
